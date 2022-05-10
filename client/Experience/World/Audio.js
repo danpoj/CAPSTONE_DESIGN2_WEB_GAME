@@ -15,7 +15,7 @@ export default class Audio {
     this.audioLoader.load("./resources/audio/forest.mp3", (buffer) => {
       this.sound.setBuffer(buffer);
       this.sound.setLoop(true);
-      this.sound.setVolume(0.3);
+      this.sound.setVolume(0.7);
       this.sound.play();
     });
 
