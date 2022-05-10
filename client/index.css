@@ -13,6 +13,7 @@ body {
   /* padding-bottom: 3rem; */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
+  background-color: #ffebeb;
 }
 
 .start_menu {
@@ -38,14 +39,21 @@ body {
 .start_menu__form_input {
   margin-top: 10px;
   text-align: center;
-  color: rgb(82 82 82);
+  color: white;
   width: 150px;
   height: 32px;
   font-size: 13px;
+  font-weight: bold;
   border: 0;
   border-radius: 10px;
   outline: none;
-  background-color: rgb(233, 233, 233);
+  background-color: #ff002299;
+}
+
+.start_menu__text2 {
+  margin-top: 10px;
+  color: #888888;
+  font-size: 8px;
 }
 
 .point {
@@ -260,7 +268,7 @@ body {
   top: 50%;
   width: 100%;
   height: 3px;
-  background: #ffaaff;
+  background: #ff002299;
   transform: scaleX(0);
   transform-origin: top left;
   transition: transform 0.5s;
@@ -271,6 +279,26 @@ body {
 .loading-bar.ended {
   transform-origin: top right;
   transition: transform 1.5s ease-in-out;
+}
+
+.fox-1 {
+  margin-bottom: -30px;
+}
+
+.loading_fox {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  pointer-events: none;
+  display: none;
+}
+
+.visible_flex {
+  display: flex;
 }
 
 .visible {

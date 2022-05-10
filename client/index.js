@@ -20,6 +20,7 @@ class Start {
     this.startMenuDiv = document.querySelector("div.start_menu");
     this.helpDiv = document.querySelector("div.point");
     this.loadingBar = document.querySelector("div.loading-bar");
+    this.loadingFox = document.querySelector("div.loading_fox");
 
     this.experience = new Experience(this.canvas);
 
@@ -30,6 +31,7 @@ class Start {
 
     this.helpDiv.style.display = "block";
     this.loadingBar.classList.add("visible");
+    this.loadingFox.classList.add("visible_flex");
   }
 }
 
