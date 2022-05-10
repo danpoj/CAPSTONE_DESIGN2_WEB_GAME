@@ -25,3 +25,11 @@ https://danpoj.netlify.app/
 9. integrate with unreal project
 10. collision, world scale
 11. walking, running, barking ,,, audio
+
+<br>
+
+## 🔮
+
+[glb packer](https://glb-packer.glitch.me/)
+
+[gltf validator](https://github.khronos.org/glTF-Validator/)
