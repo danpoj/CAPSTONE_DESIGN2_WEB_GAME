@@ -159,6 +159,9 @@ export default class Experience {
   }
 
   update() {
+    if (this.square.duck) {
+      this.square.rotateDuck();
+    }
     this.fps.updateBegin();
 
     this.camera.update();

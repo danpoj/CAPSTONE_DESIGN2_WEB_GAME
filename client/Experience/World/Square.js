@@ -18,5 +18,16 @@ export default class Square {
 
       this.scene.add(model);
     });
+
+    this.gltfLoader.load("./Static/models/Duck/Duck.gltf", (file) => {
+      this.duck = file.scene;
+      this.duck.position.set(-10, 0, 10);
+      this.duck.scale.set(1.5, 1.5, 1.5);
+      this.scene.add(this.duck);
+    });
+  }
+
+  rotateDuck() {
+    this.duck.rotation.y += 0.05;
   }
 }
