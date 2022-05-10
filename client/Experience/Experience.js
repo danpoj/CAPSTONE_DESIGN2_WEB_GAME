@@ -20,6 +20,7 @@ import MeshWalk from "./MeshWalk.js";
 import Chat from "./Chat.js";
 import FPS from "./Utils/FPS.js";
 import LoadingProgress from "../LoadingProgress.js";
+import Square from "./World/Square.js";
 
 let instance = null;
 
@@ -66,6 +67,7 @@ export default class Experience {
     // this.audio2 = new Audio2();
 
     this.foxLocal = new FoxLocal();
+    this.square = new Square();
 
     // this.thirdPersonCamera = new ThirdPersonCamera();
 
