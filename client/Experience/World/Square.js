@@ -12,7 +12,7 @@ export default class Square {
   setModel() {
     this.gltfLoader.load("./Static/models/Square/out.glb", (file) => {
       const model = file.scene;
-      model.position.set(-20, -80, -30);
+      model.position.set(-20, -79, -30);
       // this.model.rotation.set(0, Math.PI, 0);
       model.scale.set(1, 1, 1);
 
