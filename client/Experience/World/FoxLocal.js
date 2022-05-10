@@ -66,7 +66,7 @@ export default class FoxLocal extends EventEmitter {
           0,
           Math.random() * 6 - 3
         );
-        this.model.scale.set(0.013, 0.013, 0.013);
+        this.model.scale.set(0.01, 0.01, 0.01);
 
         this.model.traverse((child) => {
           if (child instanceof THREE.Mesh) {
