@@ -44,7 +44,7 @@ export default class Experience {
     // Options
     this.canvas = _canvas;
 
-    this.socket = io("https://cd2-project.herokuapp.com/");
+    this.socket = io("https://cd2-webgame.herokuapp.com/");
     // this.socket = io("http://localhost:3001");
 
     this.socket.on("connect", () => {});
