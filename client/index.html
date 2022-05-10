@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="favicon" href="./resources/favicon/favicon.ico"> -->
+    <link rel="icon" type="image/x-icon" href="./resources/favicon/favicon.ico">
+    <link rel="stylesheet" href="./index.css" />
+    <title>✨🌈🍒🔮🥝</title>
+  </head>
+  <body>
+    <canvas class="webgl"></canvas>
+
+    <div class="loading-bar"></div>
+
+    <div class="start_menu">
+      <h2 class="start_menu__header">🌈🍒🔮🥝</h2>
+      <p class="start_menu__text">user name</h1>
+      <form class="start_menu__form">
+        <input type="text" class="start_menu__form_input" />
+      </form>
+    </div>
+
+    <div class="point point-0">
+      <div class="label-2">< ></div>
+      <div class="label-0 playing"><b>&#9834;</b></div>
+      <div class="label-1"><b>?</b></div>
+      <div class="text"><b>WASD</b><br>character control<br><br>
+        <b>SHIFT</b><br>run<br>
+        <!-- 2016104159 컴퓨터공학과 장원석<br>
+        2016104160 컴퓨터공학과 장원석<br><br>
+        capstone design2<br>
+        metaverse platform<br> -->
+      </div>
+    </div>
+
+    
+
+    <div class="chat_container">
+      <div class="chat_container__hidebar">&#9660;</div>
+      <ul class="chat_container__text"></ul>
+      <form class="chat_container__form">
+        <input class="chat_container__input" type="text">
+      </form>
+    </div>
+
+    <div class="chat_container__showbar">&#9650;</div>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "socket.io-client": "https://cdn.socket.io/4.4.1/socket.io.esm.min.js",
+          "three": "./node_modules/three/build/three.module.js",
+          "three/examples/jsm/controls/OrbitControls": "./node_modules/three/examples/jsm/controls/OrbitControls.js",
+          "three/examples/jsm/loaders/GLTFLoader.js": "./node_modules/three/examples/jsm/loaders/GLTFLoader.js"
+        }
+      }
+    </script>
+    <script type="module" src="./index.js"></script>
+  </body>
+</html>

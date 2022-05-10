@@ -1,0 +1,6 @@
+[build]
+command = ""
+publish = "client"
+
+[functions]
+  included_files = ["*.json"]
