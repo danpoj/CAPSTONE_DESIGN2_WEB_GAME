@@ -21,6 +21,7 @@ import Chat from "./Chat.js";
 import FPS from "./Utils/FPS.js";
 import LoadingProgress from "../LoadingProgress.js";
 import Square from "./World/Square.js";
+import Editor from "./Editor.js";
 
 let instance = null;
 
@@ -68,6 +69,8 @@ export default class Experience {
 
     this.foxLocal = new FoxLocal();
     this.square = new Square();
+
+    this.editor = new Editor();
 
     // this.thirdPersonCamera = new ThirdPersonCamera();
 
