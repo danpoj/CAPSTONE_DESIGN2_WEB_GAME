@@ -297,14 +297,6 @@ body {
   display: none;
 }
 
-.visible_flex {
-  display: flex;
-}
-
-.visible {
-  display: block;
-}
-
 .webgl {
   position: absolute;
   top: 0;
@@ -312,21 +304,74 @@ body {
 }
 
 .editor {
+  display: none;
   position: absolute;
-  opacity: 0.85;
+  opacity: 0.7;
 
   right: 2%;
   bottom: 2%;
-  z-index: 1;
+
+  border-radius: 20px;
+}
+
+.editor_container {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 8%;
+}
+
+.clear {
+  padding: 6px 12px;
+  background-color: #555555;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.add {
+  padding: 6px 12px;
+  background-color: #555555;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.file {
+}
+
+.file label {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #555555;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.file input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+  padding: 0;
 }
 
 .hide {
   display: none;
 }
 
-.model_upload {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  z-index: 2;
+.visible_flex {
+  display: flex;
+}
+
+.visible {
+  display: block;
 }

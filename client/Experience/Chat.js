@@ -5,14 +5,11 @@ export default class Chat {
     this.experience = new Experience();
     this.socket = this.experience.socket;
 
-    this.chatContainer = document.querySelector("div.chat_container");
     this.hideBar = document.querySelector("div.chat_container__hidebar");
     this.showBar = document.querySelector("div.chat_container__showbar");
     this.messages = document.querySelector("ul.chat_container__text");
     this.form = document.querySelector("form.chat_container__form");
     this.input = document.querySelector("input.chat_container__input");
-
-    this.chatContainer.classList.add("visible");
 
     this.form.addEventListener("submit", (event) => {
       event.preventDefault();

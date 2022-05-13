@@ -11,6 +11,10 @@ export default class Resources extends EventEmitter {
     this.experience = new Experience();
     this.loadingBar = document.querySelector(".loading-bar");
     this.loadingFox = document.querySelector(".loading_fox");
+    this.editorContainer = document.querySelector("div.editor_container");
+    this.editorCanvas = document.querySelector("canvas.editor");
+    this.chatContainer = document.querySelector("div.chat_container");
+
     this.loadingProgress = this.experience.loadingProgress;
     this.sources = sources;
 
@@ -27,6 +31,9 @@ export default class Resources extends EventEmitter {
           this.loadingBar.style.transform = "";
           setTimeout(() => {
             this.loadingFox.classList.remove("visible_flex");
+            this.editorContainer.classList.add("visible_flex");
+            this.editorCanvas.classList.add("visible_flex");
+            this.chatContainer.classList.add("visible");
           }, 1000);
         });
       },

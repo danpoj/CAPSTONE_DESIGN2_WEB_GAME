@@ -16,7 +16,9 @@ export default class Editor {
     this.gltfLoader = new GLTFLoader();
     this.gltfLoader.setDRACOLoader(this.dracoLoader);
 
-    this.input = document.querySelector(".model_upload");
+    this.input = document.querySelector('input[type="file"]');
+    this.clear = document.querySelector("div.clear");
+    this.add = document.querySelector("div.add");
 
     this.scene.background = new THREE.Color(0x000000);
 
@@ -32,6 +34,28 @@ export default class Editor {
 
     this.setRenderer();
 
+    this.add.addEventListener(
+      "click",
+      () => {
+        if (this.model) {
+          console.log(this.model.scene.scale);
+          this.model.scene.scale.set(
+            5 / this.sizeBox,
+            5 / this.sizeBox,
+            5 / this.sizeBox
+          );
+          this.model.scene.position.set(
+            this.experience.foxLocal.model.position.x,
+            this.experience.foxLocal.model.position.y,
+            this.experience.foxLocal.model.position.z
+          );
+          this.experience.scene.add(this.model.scene);
+          this.scene.remove(this.model.scene);
+        }
+      },
+      false
+    );
+
     this.input.addEventListener(
       "change",
       (e) => {
@@ -39,6 +63,7 @@ export default class Editor {
         reader.readAsDataURL(this.input.files[0]);
         reader.onload = () => {
           this.gltfLoader.load(reader.result, (gltf) => {
+            this.model = gltf;
             let box = new THREE.Box3().setFromObject(gltf.scene);
             let center = new THREE.Vector3();
             box.getCenter(center);
@@ -47,8 +72,20 @@ export default class Editor {
             this.scene.add(gltf.scene);
 
             this.zoomfit(gltf.scene, this.camera);
+
+            this.measureSize(gltf.scene);
           });
         };
+      },
+      false
+    );
+
+    this.clear.addEventListener(
+      "click",
+      () => {
+        if (this.model) {
+          this.scene.remove(this.model.scene);
+        }
       },
       false
     );
@@ -149,6 +186,24 @@ export default class Editor {
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.renderer.setSize(this.sizes.width / 1.4, this.sizes.height / 1.4);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  }
+
+  clearScene() {}
+
+  cleanMaterial(material) {
+    material.dispose();
+
+    for (const key of Object.keys(material)) {
+      const value = material[key];
+      if (value && typeof value === "object" && "minFilter" in value) {
+        value.dispose();
+      }
+    }
+  }
+
+  measureSize(object) {
+    let box = new THREE.Box3().setFromObject(object);
+    this.sizeBox = box.getSize(new THREE.Vector3()).length();
   }
 
   update() {
