@@ -7,6 +7,7 @@ export default class Chat {
 
     this.hideBar = document.querySelector("div.chat_container__hidebar");
     this.showBar = document.querySelector("div.chat_container__showbar");
+    this.chatContainer = document.querySelector("div.chat_container");
     this.messages = document.querySelector("ul.chat_container__text");
     this.form = document.querySelector("form.chat_container__form");
     this.input = document.querySelector("input.chat_container__input");
