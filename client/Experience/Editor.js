@@ -17,8 +17,11 @@ export default class Editor {
     this.gltfLoader.setDRACOLoader(this.dracoLoader);
 
     this.input = document.querySelector('input[type="file"]');
+    this.editorContainer = document.querySelector("div.editor_container");
     this.clear = document.querySelector("div.clear");
     this.add = document.querySelector("div.add");
+    this.hide = document.querySelector("div.hide_editor");
+    this.show = document.querySelector("div.show_editor");
 
     this.scene.background = new THREE.Color(0x000000);
 
@@ -33,6 +36,18 @@ export default class Editor {
     // this.loadModel();
 
     this.setRenderer();
+
+    this.hide.addEventListener("click", () => {
+      this.editorContainer.classList.remove("visible_flex");
+      this.canvas.classList.remove("visible_flex");
+      this.show.classList.add("visible_flex");
+    });
+
+    this.show.addEventListener("click", () => {
+      this.editorContainer.classList.add("visible_flex");
+      this.canvas.classList.add("visible_flex");
+      this.show.classList.remove("visible_flex");
+    });
 
     this.add.addEventListener(
       "click",

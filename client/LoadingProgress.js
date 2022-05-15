@@ -20,7 +20,7 @@ export default class LoadingProgress {
       fragmentShader: `
             uniform float uAlpha;
             void main() {
-                gl_FragColor = vec4(1.0, 0.9, 0.9, uAlpha);
+                gl_FragColor = vec4(1.0, 1.0, 1.0, uAlpha);
             }
         `,
     });
