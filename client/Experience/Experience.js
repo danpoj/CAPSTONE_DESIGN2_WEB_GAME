@@ -22,6 +22,7 @@ import FPS from "./Utils/FPS.js";
 import LoadingProgress from "../LoadingProgress.js";
 import Square from "./World/Square.js";
 import Editor from "./Editor.js";
+import Bowling from "./World/Bowling.js";
 
 let instance = null;
 
@@ -69,6 +70,7 @@ export default class Experience {
 
     this.foxLocal = new FoxLocal();
     this.square = new Square();
+    this.bowling = new Bowling();
 
     this.editor = new Editor();
 
@@ -78,7 +80,7 @@ export default class Experience {
 
     // this.fox = new Fox();
 
-    this.scene.background = new THREE.Color(0xffffff);
+    this.scene.background = new THREE.Color(0x111111);
     // values
     this.rplayer = [];
     this.addedListID = [];
@@ -162,6 +164,8 @@ export default class Experience {
   }
 
   update() {
+    this.bowling.update();
+
     if (this.square.duck) {
       this.square.rotateDuck();
     }

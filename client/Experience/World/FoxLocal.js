@@ -62,9 +62,9 @@ export default class FoxLocal extends EventEmitter {
         this.resource = file;
         this.model = file.scene;
         this.model.position.set(
-          Math.random() * 6 - 3,
+          20 + Math.sin(Math.random() * 10) * 2,
           0,
-          Math.random() * 6 - 3
+          -20 + Math.sin(Math.random() * 10) * 2
         );
         this.model.scale.set(0.01, 0.01, 0.01);
 

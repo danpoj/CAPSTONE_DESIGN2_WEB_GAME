@@ -27,7 +27,13 @@ export default class Camera {
 
   setControls() {
     this.controls = new OrbitControls(this.instance, this.canvas);
-    this.controls.enableDamping = true;
+    // this.controls.enableDamping = true;
+    // this.controls.autoRotate = false;
+    // this.controls.enabled = false;
+    // this.controls.enablePan = false;
+    // this.controls.enableRotate = false;
+    // this.controls.keyPanSpeed = 0;
+    // this.controls.enableZoom = false;
   }
 
   resize() {
