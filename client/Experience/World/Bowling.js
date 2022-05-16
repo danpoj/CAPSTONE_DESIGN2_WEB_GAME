@@ -57,6 +57,41 @@ export default class Bowling {
     this.bowlingPin.addEventListener("click", () => {
       this.createBowlingPin();
     });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "]") {
+        this.sphereShape = new CANNON.Sphere(0.3);
+        this.sphereBody = new CANNON.Body({
+          mass: 1,
+          shape: this.sphereShape,
+        });
+        this.sphereBody.position.set(
+          this.foxLocal.model.position.x,
+          this.foxLocal.model.position.y + 2,
+          this.foxLocal.model.position.z
+        );
+        this.sphereBody.applyLocalForce(
+          new CANNON.Vec3(1500, 0, 0),
+          new CANNON.Vec3(0, 0, 0)
+        );
+        this.world.addBody(this.sphereBody);
+
+        this.sphere = new THREE.Mesh(
+          new THREE.SphereGeometry(0.3, 20, 20),
+          new THREE.MeshStandardMaterial({
+            metalness: 0.6,
+            roughness: 0.4,
+            color: 0xffff00,
+          })
+        );
+        this.sphere.position.set(
+          this.foxLocal.model.position.x,
+          this.foxLocal.model.position.y + 0.5,
+          this.foxLocal.model.position.z
+        );
+        this.scene.add(this.sphere);
+      }
+    });
   }
 
   addFloor() {
@@ -182,6 +217,10 @@ export default class Bowling {
         pin.mesh.position.copy(pin.body.position);
         pin.mesh.quaternion.copy(pin.body.quaternion);
       }
+    }
+
+    if (this.sphere) {
+      this.sphere.position.copy(this.sphereBody.position);
     }
   }
 }

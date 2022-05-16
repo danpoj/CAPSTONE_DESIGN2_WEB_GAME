@@ -66,7 +66,7 @@ export default class FoxLocal extends EventEmitter {
           0,
           -20 + Math.sin(Math.random() * 10) * 2
         );
-        this.model.scale.set(0.01, 0.01, 0.01);
+        this.model.scale.set(0.008, 0.008, 0.008);
 
         this.model.traverse((child) => {
           if (child instanceof THREE.Mesh) {
@@ -209,10 +209,11 @@ export default class FoxLocal extends EventEmitter {
 
       if (!this._controls._move.shift) {
         this.animation.mixer.update(this.time.delta * 0.00085);
-        this._controls.Update(this.time.delta * 0.00025);
+        this._controls.Update(this.time.delta * 0.0002);
       } else {
         this.animation.mixer.update(this.time.delta * 0.0015);
-        this._controls.Update(this.time.delta * 0.0005);
+        // this._controls.Update(this.time.delta * 0.0005);
+        this._controls.Update(this.time.delta * 0.00035);
       }
     }
   }

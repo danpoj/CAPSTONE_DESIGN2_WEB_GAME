@@ -20,14 +20,14 @@ export default class Camera {
       0.1,
       500
     );
-    this.instance.position.set(17, 19, -16);
+    this.instance.position.set(10, 10, -8);
 
     this.scene.add(this.instance);
   }
 
   setControls() {
     this.controls = new OrbitControls(this.instance, this.canvas);
-    // this.controls.enableDamping = true;
+    this.controls.enableDamping = true;
     // this.controls.autoRotate = false;
     // this.controls.enabled = false;
     // this.controls.enablePan = false;

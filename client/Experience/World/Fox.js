@@ -105,7 +105,7 @@ export default class Fox extends EventEmitter {
           0,
           Math.random() * 6 - 3
         );
-        this.model.scale.set(0.01, 0.01, 0.01);
+        this.model.scale.set(0.008, 0.008, 0.008);
 
         this.model.traverse((child) => {
           if (child instanceof THREE.Mesh) {
