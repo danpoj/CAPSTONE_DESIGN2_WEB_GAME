@@ -9,6 +9,7 @@ export default class Bowling {
     this.scene = this.experience.scene;
     this.time = this.experience.time;
     this.square = this.experience.square;
+    this.socket = this.experience.socket;
     this.loader = new GLTFLoader();
 
     this.hitSound = new Audio("resources/audio/hit.mp3");
@@ -23,6 +24,7 @@ export default class Bowling {
     };
 
     this.objectsToUpdate = [];
+    this.remoteBox = [];
     this.bowlingPins = [];
 
     this.world = new CANNON.World();
@@ -32,30 +34,55 @@ export default class Bowling {
 
     this.boxGeometry = new THREE.BoxGeometry(1, 1, 1);
     this.boxMaterial = new THREE.MeshStandardMaterial({
-      metalness: 0.6,
-      roughness: 0.4,
-      color: 0xff0000,
+      metalness: 0.7,
+      roughness: 0.2,
+      color: 0xffffff,
     });
 
     this.addFloor();
 
     this.btn = document.querySelector(".cube");
     this.btn.addEventListener("click", () => {
-      this.createBox(Math.random(), Math.random(), Math.random(), {
+      const width = Math.random();
+      const height = Math.random();
+      const depth = Math.random();
+      const position = {
         x: this.foxLocal.model.position.x,
         y: 3,
         z: this.foxLocal.model.position.z,
+      };
+
+      this.createBox(width, height, depth, position);
+
+      this.socket.emit("box", {
+        width,
+        height,
+        depth,
+        position,
       });
     });
 
     this.remove = document.querySelector(".cube_remove");
     this.remove.addEventListener("click", () => {
       this.removeBox(this.objectsToUpdate);
+      this.socket.emit("remove box", "good");
+    });
+
+    this.socket.on("remove box", () => {
+      this.removeBox(this.objectsToUpdate);
     });
 
     this.bowlingPin = document.querySelector(".bowling_pin");
     this.bowlingPin.addEventListener("click", () => {
       this.createBowlingPin();
+    });
+
+    this.socket.on("box", (boxData) => {
+      this.createBox(boxData.width, boxData.height, boxData.depth, {
+        x: boxData.position.x,
+        y: boxData.position.y,
+        z: boxData.position.z,
+      });
     });
 
     window.addEventListener("keydown", (e) => {
