@@ -44,6 +44,7 @@ io.on("connection", (socket) => {
   console.log(`user connection: ${socket.id}`);
 
   socket.userData = { x: 0, y: 0, z: 0 };
+  socket.boxData = [];
   socket.userData.color = colors[Math.round(Math.random() * 18 - 0.5)];
 
   socket.emit("setId", { id: socket.id });
@@ -55,15 +56,6 @@ io.on("connection", (socket) => {
       color: socket.userData.color,
     });
   });
-
-  // socket.on("init", (data) => {
-  //   socket.userData.id = socket.id;
-  //   socket.userData.x = data.x;
-  //   socket.userData.y = data.y;
-  //   socket.userData.z = data.z;
-  //   socket.userData.rotation = data.rotation;
-  //   socket.userData.anim = data.anim;
-  // });
 
   socket.userData.id = socket.id;
 
@@ -91,6 +83,14 @@ io.on("connection", (socket) => {
       time: `${new Date().getHours()}:${new Date().getSeconds()}`,
       color: socket.userData.color,
     });
+  });
+
+  socket.on("box", (boxData) => {
+    socket.broadcast.emit("box", boxData);
+  });
+
+  socket.on("remove box", () => {
+    socket.broadcast.emit("remove box", "good");
   });
 });
 
@@ -126,28 +126,5 @@ setInterval(async function () {
     }
   }
 
-  // console.log(remotePlayers);
-
   if (remotePlayers.length > 0) io.emit("remoteData", remotePlayers);
-
-  // const nsp = io.of("/");
-  // let pack = [];
-  // for (let id in io.sockets.sockets) {
-  //   const socket = nsp.connected[id];
-  //   //Only push sockets that have been initialised
-  //   if (socket.userData.model !== undefined) {
-  //     pack.push({
-  //       id: socket.id,
-  //       model: socket.userData.model,
-  //       colour: socket.userData.colour,
-  //       x: socket.userData.x,
-  //       y: socket.userData.y,
-  //       z: socket.userData.z,
-  //       heading: socket.userData.heading,
-  //       pb: socket.userData.pb,
-  //       action: socket.userData.action,
-  //     });
-  //   }
-  // }
-  // if (pack.length > 0) io.emit("remoteData", pack);
 }, 20);
