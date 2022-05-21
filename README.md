@@ -24,7 +24,6 @@ https://danpoj.netlify.app/
 8. ~~custom model loading process~~
 9. integrate with unreal project
 10. ~~collision, world scale~~
-11. walking, running, barking ,,, audio
 
 <br>
 
