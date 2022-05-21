@@ -13,8 +13,6 @@ export default class FoxLocal extends EventEmitter {
     this.time = this.experience.time;
     this._camera = this.experience.camera.instance;
 
-    // Resource
-
     // values
     this.id = id;
     this.x = 0;

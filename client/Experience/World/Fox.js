@@ -12,6 +12,11 @@ export default class Fox extends EventEmitter {
     this.time = this.experience.time;
     this._camera = this.experience.camera.instance;
 
+    setTimeout(() => {
+      this.world = this.experience.bowling.world;
+      this.addFoxRemoteCollision();
+    }, 5000);
+
     // Resource
 
     // values
@@ -197,6 +202,21 @@ export default class Fox extends EventEmitter {
     }
   }
 
+  addFoxRemoteCollision() {
+    this.foxShape = new CANNON.Box(new CANNON.Vec3(0.2, 0.2, 0.2));
+    this.foxBody = new CANNON.Body({
+      mass: 0.8,
+      shape: this.foxShape,
+    });
+    console.log(this.model);
+    this.foxBody.position.set(
+      this.model.position.x,
+      this.model.position.y,
+      this.model.position.z
+    );
+    this.world.addBody(this.foxBody);
+  }
+
   update() {
     if (this.model) {
       this.sprite_.position.set(
@@ -204,6 +224,10 @@ export default class Fox extends EventEmitter {
         this.model.position.y + 1,
         this.model.position.z
       );
+
+      if (this.model && this.foxBody) {
+        this.foxBody.position.copy(this.model.position);
+      }
     }
     // this.animBlending();
     // this.experience.socket.emit("update", {

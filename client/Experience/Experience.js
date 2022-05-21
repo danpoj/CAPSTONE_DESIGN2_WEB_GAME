@@ -74,12 +74,6 @@ export default class Experience {
 
     this.editor = new Editor();
 
-    // this.thirdPersonCamera = new ThirdPersonCamera();
-
-    // this.meshwalk = new MeshWalk();
-
-    // this.fox = new Fox();
-
     this.scene.background = new THREE.Color(0x111111);
     // values
     this.rplayer = [];

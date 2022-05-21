@@ -119,6 +119,8 @@ export default class Bowling {
         this.scene.add(this.sphere);
       }
     });
+
+    this.addFoxLocalCollision();
   }
 
   addFloor() {
@@ -133,6 +135,22 @@ export default class Bowling {
       Math.PI * 0.5
     );
     this.world.addBody(this.floorBody);
+  }
+
+  addFoxLocalCollision() {
+    setTimeout(() => {
+      this.foxShape = new CANNON.Box(new CANNON.Vec3(0.2, 0.2, 0.2));
+      this.foxBody = new CANNON.Body({
+        mass: 0.8,
+        shape: this.foxShape,
+      });
+      this.foxBody.position.set(
+        this.foxLocal.model.position.x,
+        this.foxLocal.model.position.y,
+        this.foxLocal.model.position.z
+      );
+      this.world.addBody(this.foxBody);
+    }, 5000);
   }
 
   createBox(width, height, depth, position) {
@@ -248,6 +266,10 @@ export default class Bowling {
 
     if (this.sphere) {
       this.sphere.position.copy(this.sphereBody.position);
+    }
+
+    if (this.foxLocal && this.foxBody) {
+      this.foxBody.position.copy(this.foxLocal.model.position);
     }
   }
 }

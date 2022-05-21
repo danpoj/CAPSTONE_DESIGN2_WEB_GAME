@@ -66,6 +66,7 @@ export default class Editor {
           );
           this.experience.scene.add(this.model.scene);
           this.scene.remove(this.model.scene);
+          this.model = undefined;
         }
       },
       false
@@ -100,6 +101,7 @@ export default class Editor {
       () => {
         if (this.model) {
           this.scene.remove(this.model.scene);
+          this.experience.scene.remove(this.model.scene);
         }
       },
       false
