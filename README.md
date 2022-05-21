@@ -21,9 +21,9 @@ https://danpoj.netlify.app/
 5. positional audio
 6. ~~text chat~~
 7. voice chat
-8. custom model loading process
+8. ~~custom model loading process~~
 9. integrate with unreal project
-10. collision, world scale
+10. ~~collision, world scale~~
 11. walking, running, barking ,,, audio
 
 <br>
