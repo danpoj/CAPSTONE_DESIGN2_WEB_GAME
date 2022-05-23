@@ -45,13 +45,13 @@ export default class Editor {
     this.hide.addEventListener("click", () => {
       this.editorContainer.classList.remove("visible_flex");
       this.canvas.classList.remove("visible_flex");
-      this.show.classList.add("visible_flex");
+      this.show.classList.remove("hide");
     });
 
     this.show.addEventListener("click", () => {
       this.editorContainer.classList.add("visible_flex");
       this.canvas.classList.add("visible_flex");
-      this.show.classList.remove("visible_flex");
+      this.show.classList.add("hide");
     });
 
     this.add.addEventListener(

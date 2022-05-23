@@ -61,7 +61,6 @@ body {
   position: absolute;
   top: 40px;
   right: 40px;
-  display: none;
   user-select: none;
 }
 
@@ -366,7 +365,6 @@ body {
   position: absolute;
   bottom: 2%;
   right: 2%;
-  display: none;
 }
 
 .file {

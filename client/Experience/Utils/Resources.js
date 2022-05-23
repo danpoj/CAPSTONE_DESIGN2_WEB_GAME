@@ -9,11 +9,18 @@ export default class Resources extends EventEmitter {
     super();
 
     this.experience = new Experience();
+    this.points = document.querySelector("div.point");
     this.loadingBar = document.querySelector(".loading-bar");
     this.loadingFox = document.querySelector(".loading_fox");
     this.editorContainer = document.querySelector("div.editor_container");
     this.editorCanvas = document.querySelector("canvas.editor");
     this.chatContainer = document.querySelector("div.chat_container");
+    this.chatHideBar = document.querySelector("div.chat_container__hidebar");
+    this.showBar = document.querySelector("div.chat_container__showbar");
+    this.showEditor = document.querySelector("div.show_editor");
+    this.addCubeBtn = document.querySelector("button.cube");
+    this.removeCubeBtn = document.querySelector("button.cube_remove");
+    this.addBowlingPinBtn = document.querySelector("button.bowling_pin");
 
     this.loadingProgress = this.experience.loadingProgress;
     this.sources = sources;
@@ -31,9 +38,15 @@ export default class Resources extends EventEmitter {
           this.loadingBar.style.transform = "";
           setTimeout(() => {
             this.loadingFox.classList.remove("visible_flex");
-            this.editorContainer.classList.add("visible_flex");
-            this.editorCanvas.classList.add("visible_flex");
-            this.chatContainer.classList.add("visible");
+            // this.editorContainer.classList.add("visible_flex");
+            // this.editorCanvas.classList.add("visible_flex");
+            // this.chatContainer.classList.add("visible");
+            this.showBar.classList.add("visible");
+            this.showEditor.classList.remove("hide");
+            this.addCubeBtn.classList.remove("hide");
+            this.removeCubeBtn.classList.remove("hide");
+            this.addBowlingPinBtn.classList.remove("hide");
+            this.points.classList.remove("hide");
           }, 1000);
         });
       },

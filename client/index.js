@@ -18,7 +18,6 @@ class Start {
     this.canvas = document.querySelector("canvas.webgl");
     this.input = document.querySelector("input.start_menu__form_input");
     this.startMenuDiv = document.querySelector("div.start_menu");
-    this.helpDiv = document.querySelector("div.point");
     this.loadingBar = document.querySelector("div.loading-bar");
     this.loadingFox = document.querySelector("div.loading_fox");
 
@@ -29,7 +28,6 @@ class Start {
 
     this.experience.socket.emit("user name", this.input.value);
 
-    this.helpDiv.style.display = "block";
     this.loadingBar.classList.add("visible");
     this.loadingFox.classList.add("visible_flex");
   }
