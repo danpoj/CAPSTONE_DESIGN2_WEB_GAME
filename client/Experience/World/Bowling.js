@@ -43,11 +43,12 @@ export default class Bowling {
     this.world.gravity.set(0, -9.82, 0);
 
     this.boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-    this.boxMaterial = new THREE.MeshStandardMaterial({
-      metalness: 0.7,
-      roughness: 0.2,
-      color: 0xffffff,
-    });
+    // this.boxMaterial = new THREE.MeshStandardMaterial({
+    //   metalness: 0.7,
+    //   roughness: 0.2,
+    //   color: 0xffffff,
+    // });
+    this.boxMaterial = new THREE.MeshNormalMaterial();
 
     this.addFloor();
 
@@ -166,12 +167,12 @@ export default class Bowling {
 
   createBox(width, height, depth, position) {
     const mesh = new THREE.Mesh(this.boxGeometry, this.boxMaterial);
-    mesh.scale.set(width, height, depth);
+    mesh.scale.set(width / 2, height / 2, depth / 2);
     mesh.position.copy(position);
     this.scene.add(mesh);
 
     const shape = new CANNON.Box(
-      new CANNON.Vec3(width * 0.5, height * 0.5, depth * 0.5)
+      new CANNON.Vec3(width * 0.25, height * 0.25, depth * 0.25)
     );
     const body = new CANNON.Body({
       mass: 1,
@@ -263,12 +264,12 @@ export default class Bowling {
 
   update() {
     this.world.step(1 / 60, this.time.delta / 1200, 3);
-    // if (this.objectsToUpdate.length > 0) {
-    //   for (const object of this.objectsToUpdate) {
-    //     object.mesh.position.copy(object.body.position);
-    //     object.mesh.quaternion.copy(object.body.quaternion);
-    //   }
-    // }
+    if (this.objectsToUpdate.length > 0) {
+      for (const object of this.objectsToUpdate) {
+        object.mesh.position.copy(object.body.position);
+        object.mesh.quaternion.copy(object.body.quaternion);
+      }
+    }
 
     if (this.bowlingPins.length > 0) {
       for (const pin of this.bowlingPins) {

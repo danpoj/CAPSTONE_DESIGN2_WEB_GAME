@@ -2,6 +2,7 @@ import Experience from "../Experience.js";
 import Environment from "./Environment.js";
 import Floor from "./Floor.js";
 import FoxLocal from "./FoxLocal.js";
+import Portal from "./Portal.js";
 
 export default class World {
   constructor() {
@@ -12,7 +13,8 @@ export default class World {
     // Wait for resources
     this.resources.on("ready", () => {
       // Setup
-      this.floor = new Floor();
+      // this.floor = new Floor();
+      // this.portal = new Portal();
       this.environment = new Environment();
     });
   }

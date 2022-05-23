@@ -23,6 +23,7 @@ import LoadingProgress from "../LoadingProgress.js";
 import Square from "./World/Square.js";
 import Editor from "./Editor.js";
 import Bowling from "./World/Bowling.js";
+import Mirror from "./World/Mirror.js";
 
 let instance = null;
 
@@ -71,10 +72,11 @@ export default class Experience {
     this.foxLocal = new FoxLocal();
     this.square = new Square();
     this.bowling = new Bowling();
+    this.mirror = new Mirror();
 
     this.editor = new Editor();
 
-    this.scene.background = new THREE.Color(0x000000);
+    this.scene.background = new THREE.Color(0x050505);
     // values
     this.rplayer = [];
     this.addedListID = [];
