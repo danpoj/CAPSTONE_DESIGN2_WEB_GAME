@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DragControls } from "three/examples/jsm/controls/DragControls.js";
 import Experience from "../Experience.js";
 
 export default class Bowling {
@@ -11,6 +12,8 @@ export default class Bowling {
     this.square = this.experience.square;
     this.socket = this.experience.socket;
     this.loader = new GLTFLoader();
+    this.camera = this.experience.camera.instance;
+    this.renderer = this.experience.renderer.instance;
 
     this.hitSound = new Audio("resources/audio/hit.mp3");
     this.playHitSound = (collision) => {
@@ -26,6 +29,13 @@ export default class Bowling {
     this.objectsToUpdate = [];
     this.remoteBox = [];
     this.bowlingPins = [];
+    this.draggableObjects = [];
+
+    const controls = new DragControls(
+      this.draggableObjects,
+      this.camera,
+      this.renderer.domElement
+    );
 
     this.world = new CANNON.World();
     this.world.broadphase = new CANNON.SAPBroadphase(this.world);
@@ -144,6 +154,7 @@ export default class Bowling {
         mass: 0.8,
         shape: this.foxShape,
       });
+
       this.foxBody.position.set(
         this.foxLocal.model.position.x,
         this.foxLocal.model.position.y,
@@ -176,6 +187,8 @@ export default class Bowling {
       mesh,
       body,
     });
+
+    this.draggableObjects.push(mesh);
   }
 
   removeBox(objects) {
@@ -250,12 +263,12 @@ export default class Bowling {
 
   update() {
     this.world.step(1 / 60, this.time.delta / 1200, 3);
-    if (this.objectsToUpdate.length > 0) {
-      for (const object of this.objectsToUpdate) {
-        object.mesh.position.copy(object.body.position);
-        object.mesh.quaternion.copy(object.body.quaternion);
-      }
-    }
+    // if (this.objectsToUpdate.length > 0) {
+    //   for (const object of this.objectsToUpdate) {
+    //     object.mesh.position.copy(object.body.position);
+    //     object.mesh.quaternion.copy(object.body.quaternion);
+    //   }
+    // }
 
     if (this.bowlingPins.length > 0) {
       for (const pin of this.bowlingPins) {
@@ -266,10 +279,12 @@ export default class Bowling {
 
     if (this.sphere) {
       this.sphere.position.copy(this.sphereBody.position);
+      this.sphere.quaternion.copy(this.sphereBody.quaternion);
     }
 
     if (this.foxLocal && this.foxBody) {
       this.foxBody.position.copy(this.foxLocal.model.position);
+      this.foxBody.quaternion.copy(this.foxLocal.model.quaternion);
     }
   }
 }

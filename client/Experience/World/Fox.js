@@ -208,7 +208,6 @@ export default class Fox extends EventEmitter {
       mass: 0.8,
       shape: this.foxShape,
     });
-    console.log(this.model);
     this.foxBody.position.set(
       this.model.position.x,
       this.model.position.y,

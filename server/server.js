@@ -92,6 +92,10 @@ io.on("connection", (socket) => {
   socket.on("remove box", () => {
     socket.broadcast.emit("remove box", "good");
   });
+
+  socket.on("uploaded model", (data) => {
+    console.log(data);
+  });
 });
 
 app.get("/", (req, res) => {

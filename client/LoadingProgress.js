@@ -6,7 +6,7 @@ export default class LoadingProgress {
     this.experience = new Experience();
     this.scene = this.experience.scene;
 
-    this.overlayGeometry = new THREE.PlaneGeometry(2, 2, 1, 1);
+    this.overlayGeometry = new THREE.PlaneGeometry(150, 150, 1, 1);
     this.overlayMaterial = new THREE.ShaderMaterial({
       transparent: true,
       uniforms: {

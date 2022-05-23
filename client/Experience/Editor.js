@@ -10,6 +10,7 @@ export default class Editor {
     this.scene = new THREE.Scene();
     this.experience = new Experience();
     this.time = this.experience.time;
+    this.socket = this.experience.socket;
 
     this.dracoLoader = new DRACOLoader();
     this.dracoLoader.setDecoderPath("/Static/draco/");
@@ -24,6 +25,10 @@ export default class Editor {
     this.show = document.querySelector("div.show_editor");
 
     this.scene.background = new THREE.Color(0x000000);
+
+    this.world = this.experience.bowling.world;
+    this.foxLocal = this.experience.foxLocal;
+    this.modelsToUpdate = [];
 
     this.sizes = {
       width: window.innerWidth / 1.8,
@@ -53,17 +58,26 @@ export default class Editor {
       "click",
       () => {
         if (this.model) {
-          console.log(this.model.scene.scale);
           this.model.scene.scale.set(
-            5 / this.sizeBox,
-            5 / this.sizeBox,
-            5 / this.sizeBox
+            1 / this.sizeBox,
+            1 / this.sizeBox,
+            1 / this.sizeBox
           );
           this.model.scene.position.set(
             this.experience.foxLocal.model.position.x,
             this.experience.foxLocal.model.position.y,
             this.experience.foxLocal.model.position.z
           );
+
+          this.addModelCollision(0.5 / this.sizeBox);
+
+          this.modelsToUpdate.push({
+            mesh: this.model.scene,
+            body: this.modelBody,
+          });
+
+          // this.socket.emit("uploaded model", this.model);
+
           this.experience.scene.add(this.model.scene);
           this.scene.remove(this.model.scene);
           this.model = undefined;
@@ -223,8 +237,32 @@ export default class Editor {
     this.sizeBox = box.getSize(new THREE.Vector3()).length();
   }
 
+  addModelCollision(size) {
+    this.modelShape = new CANNON.Box(new CANNON.Vec3(size, size, size));
+    // this.modelShape = new CANNON.Sphere(size);
+    this.modelBody = new CANNON.Body({
+      mass: 0.2,
+      shape: this.modelShape,
+    });
+
+    this.modelBody.position.set(
+      this.foxLocal.model.position.x,
+      this.foxLocal.model.position.y + 5,
+      this.foxLocal.model.position.z
+    );
+
+    this.world.addBody(this.modelBody);
+  }
+
   update() {
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
+
+    if (this.modelsToUpdate.length > 0) {
+      for (const object of this.modelsToUpdate) {
+        object.mesh.position.copy(object.body.position);
+        // object.mesh.quaternion.copy(object.body.quaternion);
+      }
+    }
   }
 }
