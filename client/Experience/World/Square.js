@@ -1,5 +1,5 @@
 import Experience from "../Experience.js";
-import { DragControls } from "three/examples/jsm/controls/DragControls.js";
+// import { DragControls } from "three/examples/jsm/controls/DragControls.js";
 
 export default class Square {
   constructor() {
@@ -7,8 +7,8 @@ export default class Square {
     this.scene = this.experience.scene;
     this.gltfLoader = this.experience.resources.loaders.gltfLoader;
 
-    this.camera = this.experience.camera.instance;
-    this.renderer = this.experience.renderer.instance;
+    // this.camera = this.experience.camera.instance;
+    // this.renderer = this.experience.renderer.instance;
 
     this.array = [];
 
@@ -35,11 +35,11 @@ export default class Square {
 
       this.array.push(this.duck);
       console.log(this.array);
-      const controls = new DragControls(
-        this.array,
-        this.camera,
-        this.renderer.domElement
-      );
+      // const controls = new DragControls(
+      //   this.array,
+      //   this.camera,
+      //   this.renderer.domElement
+      // );
     });
   }
 
