@@ -18,8 +18,7 @@ export default class Resources extends EventEmitter {
     this.chatHideBar = document.querySelector("div.chat_container__hidebar");
     this.showBar = document.querySelector("div.chat_container__showbar");
     this.showEditor = document.querySelector("div.show_editor");
-    this.addCubeBtn = document.querySelector("button.cube");
-    this.removeCubeBtn = document.querySelector("button.cube_remove");
+
     this.addBowlingPinBtn = document.querySelector("button.bowling_pin");
 
     this.loadingProgress = this.experience.loadingProgress;
@@ -43,9 +42,7 @@ export default class Resources extends EventEmitter {
             // this.chatContainer.classList.add("visible");
             this.showBar.classList.add("visible");
             this.showEditor.classList.remove("hide");
-            this.addCubeBtn.classList.remove("hide");
-            this.removeCubeBtn.classList.remove("hide");
-            this.addBowlingPinBtn.classList.remove("hide");
+
             this.points.classList.remove("hide");
           }, 1000);
         });

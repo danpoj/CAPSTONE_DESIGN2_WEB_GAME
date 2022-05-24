@@ -34,7 +34,6 @@ export default class Square {
       this.scene.add(this.duck);
 
       this.array.push(this.duck);
-      console.log(this.array);
       // const controls = new DragControls(
       //   this.array,
       //   this.camera,

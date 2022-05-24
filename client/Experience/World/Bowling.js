@@ -29,13 +29,14 @@ export default class Bowling {
     this.objectsToUpdate = [];
     this.remoteBox = [];
     this.bowlingPins = [];
-    this.draggableObjects = [];
+    this.isPins = false;
+    // this.draggableObjects = [];
 
-    const controls = new DragControls(
-      this.draggableObjects,
-      this.camera,
-      this.renderer.domElement
-    );
+    // const controls = new DragControls(
+    //   this.draggableObjects,
+    //   this.camera,
+    //   this.renderer.domElement
+    // );
 
     this.world = new CANNON.World();
     this.world.broadphase = new CANNON.SAPBroadphase(this.world);
@@ -43,49 +44,79 @@ export default class Bowling {
     this.world.gravity.set(0, -9.82, 0);
 
     this.boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-    // this.boxMaterial = new THREE.MeshStandardMaterial({
-    //   metalness: 0.7,
-    //   roughness: 0.2,
-    //   color: 0xffffff,
-    // });
-    this.boxMaterial = new THREE.MeshNormalMaterial();
+    this.boxMaterial = new THREE.MeshStandardMaterial({
+      metalness: 0.9,
+      roughness: 0.05,
+      color: 0xffffff,
+    });
+    // this.boxMaterial = new THREE.MeshNormalMaterial();
 
     this.addFloor();
 
-    this.btn = document.querySelector(".cube");
-    this.btn.addEventListener("click", () => {
-      const width = Math.random();
-      const height = Math.random();
-      const depth = Math.random();
-      const position = {
-        x: this.foxLocal.model.position.x,
-        y: 3,
-        z: this.foxLocal.model.position.z,
-      };
+    // this.btn = document.querySelector(".cube");
+    // this.btn.addEventListener("click", () => {
+    //   const width = Math.random();
+    //   const height = Math.random();
+    //   const depth = Math.random();
+    //   const position = {
+    //     x: this.foxLocal.model.position.x,
+    //     y: 3,
+    //     z: this.foxLocal.model.position.z,
+    //   };
 
-      this.createBox(width, height, depth, position);
+    //   this.createBox(width, height, depth, position);
 
-      this.socket.emit("box", {
-        width,
-        height,
-        depth,
-        position,
-      });
+    //   this.socket.emit("box", {
+    //     width,
+    //     height,
+    //     depth,
+    //     position,
+    //   });
+    // });
+
+    window.addEventListener("keypress", (e) => {
+      if (
+        (e.key === "p" || e.key === "P") &&
+        this.objectsToUpdate.length < 200
+      ) {
+        const width = Math.random();
+        const height = Math.random();
+        const depth = Math.random();
+        const position = {
+          x: this.foxLocal.model.position.x,
+          y: 3,
+          z: this.foxLocal.model.position.z,
+        };
+
+        this.createBox(width, height, depth, position);
+
+        this.socket.emit("box", {
+          width,
+          height,
+          depth,
+          position,
+        });
+      }
     });
 
-    this.remove = document.querySelector(".cube_remove");
-    this.remove.addEventListener("click", () => {
-      this.removeBox(this.objectsToUpdate);
-      this.socket.emit("remove box", "good");
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "r" || e.key === "R") {
+        this.isPins = false;
+        this.removeBox(this.objectsToUpdate);
+        this.removeBox(this.bowlingPins);
+        this.socket.emit("remove box", "good");
+      }
     });
 
     this.socket.on("remove box", () => {
       this.removeBox(this.objectsToUpdate);
     });
 
-    this.bowlingPin = document.querySelector(".bowling_pin");
-    this.bowlingPin.addEventListener("click", () => {
-      this.createBowlingPin();
+    window.addEventListener("keydown", (e) => {
+      if ((e.key === "o" || e.key === "O") && !this.isPins) {
+        this.isPins = true;
+        this.createBowlingPin();
+      }
     });
 
     this.socket.on("box", (boxData) => {
@@ -188,8 +219,6 @@ export default class Bowling {
       mesh,
       body,
     });
-
-    this.draggableObjects.push(mesh);
   }
 
   removeBox(objects) {
@@ -254,6 +283,9 @@ export default class Bowling {
       shape: shape,
     });
     body.position.copy(gltf.scene.position);
+
+    body.addEventListener("collide", this.playHitSound);
+
     this.world.addBody(body);
 
     this.bowlingPins.push({
