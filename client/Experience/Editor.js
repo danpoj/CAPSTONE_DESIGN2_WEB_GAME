@@ -29,6 +29,7 @@ export default class Editor {
     this.world = this.experience.bowling.world;
     this.foxLocal = this.experience.foxLocal;
     this.modelsToUpdate = [];
+    this.remoteModelsToUpdate = [];
 
     this.sizes = {
       width: window.innerWidth / 1.8,
@@ -76,6 +77,11 @@ export default class Editor {
             body: this.modelBody,
           });
 
+          this.socket.emit("model", {
+            dataURL: this.modelDataURL,
+            position: this.foxLocal.model.position,
+          });
+
           // this.socket.emit("uploaded model", this.model);
 
           this.experience.scene.add(this.model.scene);
@@ -93,6 +99,8 @@ export default class Editor {
         reader.readAsDataURL(this.input.files[0]);
         reader.onload = () => {
           this.gltfLoader.load(reader.result, (gltf) => {
+            this.modelDataURL = reader.result;
+
             this.model = gltf;
             let box = new THREE.Box3().setFromObject(gltf.scene);
             let center = new THREE.Vector3();
@@ -120,6 +128,29 @@ export default class Editor {
       },
       false
     );
+
+    this.socket.on("model", (data) => {
+      this.gltfLoader.load(data.dataURL, (gltf) => {
+        let box = new THREE.Box3().setFromObject(gltf.scene);
+        const sizeBox = box.getSize(new THREE.Vector3()).length();
+
+        gltf.scene.scale.set(1 / sizeBox, 1 / sizeBox, 1 / sizeBox);
+        gltf.scene.position.set(
+          data.position.x,
+          data.position.y,
+          data.position.z
+        );
+
+        this.addRemoteModelCollision(0.5 / sizeBox, data.position);
+
+        this.remoteModelsToUpdate.push({
+          mesh: gltf.scene,
+          body: this.modelBody,
+        });
+
+        this.experience.scene.add(gltf.scene);
+      });
+    });
 
     window.addEventListener("resize", () => {
       // Update sizes
@@ -254,12 +285,31 @@ export default class Editor {
     this.world.addBody(this.modelBody);
   }
 
+  addRemoteModelCollision(size, position) {
+    this.modelShape = new CANNON.Box(new CANNON.Vec3(size, size, size));
+    // this.modelShape = new CANNON.Sphere(size);
+    this.modelBody = new CANNON.Body({
+      mass: 0.2,
+      shape: this.modelShape,
+    });
+
+    this.modelBody.position.set(position.x, position.y + 5, position.z);
+
+    this.world.addBody(this.modelBody);
+  }
+
   update() {
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
 
     if (this.modelsToUpdate.length > 0) {
       for (const object of this.modelsToUpdate) {
+        object.mesh.position.copy(object.body.position);
+        // object.mesh.quaternion.copy(object.body.quaternion);
+      }
+    }
+    if (this.remoteModelsToUpdate.length > 0) {
+      for (const object of this.remoteModelsToUpdate) {
         object.mesh.position.copy(object.body.position);
         // object.mesh.quaternion.copy(object.body.quaternion);
       }

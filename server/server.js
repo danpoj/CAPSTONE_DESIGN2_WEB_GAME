@@ -7,6 +7,8 @@ const port = process.env.PORT || 3001;
 const { Server } = require("socket.io");
 const path = require("path");
 
+let UserObjectsData = [];
+
 const colors = [
   "#aa0044",
   "#aa4400",
@@ -93,8 +95,8 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("remove box", "good");
   });
 
-  socket.on("uploaded model", (data) => {
-    console.log(data);
+  socket.on("model", (data) => {
+    socket.broadcast.emit("model", data);
   });
 });
 

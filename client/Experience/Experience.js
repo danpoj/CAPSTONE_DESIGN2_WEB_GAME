@@ -14,9 +14,7 @@ import { io } from "socket.io-client";
 import Fox from "./World/Fox.js";
 import FoxLocal from "./World/FoxLocal.js";
 import Audio from "./World/Audio.js";
-import Audio2 from "./World/Audio2.js";
-import ThirdPersonCamera from "./ThirdPersonCamera.js";
-import MeshWalk from "./MeshWalk.js";
+
 import Chat from "./Chat.js";
 import FPS from "./Utils/FPS.js";
 import LoadingProgress from "../LoadingProgress.js";
@@ -26,13 +24,6 @@ import Bowling from "./World/Bowling.js";
 import Mirror from "./World/Mirror.js";
 
 let instance = null;
-
-// let sprite = new SpriteText2D("SPRITE", {
-//   align: textAlign.center,
-//   font: "40px Arial",
-//   fillStyle: "#000000",
-//   antialias: false,
-// });
 
 export default class Experience {
   constructor(_canvas) {
@@ -48,8 +39,8 @@ export default class Experience {
     // Options
     this.canvas = _canvas;
 
-    this.socket = io("https://cd2-webgame.herokuapp.com/");
-    // this.socket = io("http://localhost:3001");
+    // this.socket = io("https://cd2-webgame.herokuapp.com/");
+    this.socket = io("http://localhost:3001");
 
     this.socket.on("connect", () => {});
 
