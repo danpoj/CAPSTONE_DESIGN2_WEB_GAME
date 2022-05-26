@@ -47,10 +47,9 @@ export default class FoxLocal extends EventEmitter {
     this.sprite_ = new THREE.Sprite(
       new THREE.SpriteMaterial({ map: map, color: 0xffffff })
     );
-    this.sprite_.scale.set(2, 2, 1);
-    // this.sprite_.position.y += modelData.nameOffset;
+    this.sprite_.scale.set(4, 2, 4);
+
     this.experience.scene.add(this.sprite_);
-    // console.log(this.sprite_);
   }
 
   setModel() {
@@ -61,7 +60,7 @@ export default class FoxLocal extends EventEmitter {
         this.model = file.scene;
         this.model.position.set(
           20 + Math.sin(Math.random() * 10) * 2,
-          0.5,
+          0.6,
           -20 + Math.sin(Math.random() * 10) * 2
         );
         this.model.scale.set(0.008, 0.008, 0.008);
@@ -194,7 +193,7 @@ export default class FoxLocal extends EventEmitter {
       if (this.sprite_) {
         this.sprite_.position.set(
           this.model.position.x,
-          this.model.position.y + 1,
+          this.model.position.y + 2,
           this.model.position.z
         );
       }

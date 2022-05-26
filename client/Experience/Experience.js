@@ -56,11 +56,12 @@ export default class Experience {
     this.fullscreen = new FullScreen();
     this.fps = new FPS();
 
+    this.foxLocal = new FoxLocal();
+
     this.audio = new Audio();
     this.chat = new Chat();
     // this.audio2 = new Audio2();
 
-    this.foxLocal = new FoxLocal();
     this.square = new Square();
     this.bowling = new Bowling();
     this.mirror = new Mirror();

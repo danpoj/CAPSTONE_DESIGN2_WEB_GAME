@@ -12,10 +12,10 @@ export default class Editor {
     this.time = this.experience.time;
     this.socket = this.experience.socket;
 
-    // this.dracoLoader = new DRACOLoader();
-    // this.dracoLoader.setDecoderPath("/Static/draco/");
+    this.dracoLoader = new DRACOLoader();
+    this.dracoLoader.setDecoderPath("/Static/draco/");
     this.gltfLoader = new GLTFLoader();
-    // this.gltfLoader.setDRACOLoader(this.dracoLoader);
+    this.gltfLoader.setDRACOLoader(this.dracoLoader);
 
     this.input = document.querySelector('input[type="file"]');
     this.editorContainer = document.querySelector("div.editor_container");
@@ -305,13 +305,13 @@ export default class Editor {
     if (this.modelsToUpdate.length > 0) {
       for (const object of this.modelsToUpdate) {
         object.mesh.position.copy(object.body.position);
-        // object.mesh.quaternion.copy(object.body.quaternion);
+        object.mesh.quaternion.copy(object.body.quaternion);
       }
     }
     if (this.remoteModelsToUpdate.length > 0) {
       for (const object of this.remoteModelsToUpdate) {
         object.mesh.position.copy(object.body.position);
-        // object.mesh.quaternion.copy(object.body.quaternion);
+        object.mesh.quaternion.copy(object.body.quaternion);
       }
     }
   }

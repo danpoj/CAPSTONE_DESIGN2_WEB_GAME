@@ -136,7 +136,7 @@ export default class Bowling {
         });
         this.sphereBody.position.set(
           this.foxLocal.model.position.x,
-          this.foxLocal.model.position.y + 2,
+          this.foxLocal.model.position.y,
           this.foxLocal.model.position.z
         );
         this.sphereBody.applyLocalForce(
@@ -155,7 +155,7 @@ export default class Bowling {
         );
         this.sphere.position.set(
           this.foxLocal.model.position.x,
-          this.foxLocal.model.position.y + 0.5,
+          this.foxLocal.model.position.y,
           this.foxLocal.model.position.z
         );
         this.scene.add(this.sphere);
@@ -181,7 +181,7 @@ export default class Bowling {
 
   addFoxLocalCollision() {
     setTimeout(() => {
-      this.foxShape = new CANNON.Box(new CANNON.Vec3(0.2, 0.2, 0.2));
+      this.foxShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
       this.foxBody = new CANNON.Body({
         mass: 0.8,
         shape: this.foxShape,

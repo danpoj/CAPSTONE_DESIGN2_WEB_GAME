@@ -101,14 +101,19 @@ export default class Fox extends EventEmitter {
 
   setModel() {
     this.resources.loaders.gltfLoader.load(
-      "./Static/models/Fox/glTF/Fox.gltf",
+      "./Static/models/Girl/animeGirl.glb",
       (file) => {
         this.resource = file;
         this.model = file.scene;
+        // this.model.position.set(
+        //   Math.random() * 6 - 3,
+        //   0,
+        //   Math.random() * 6 - 3
+        // );
         this.model.position.set(
-          Math.random() * 6 - 3,
-          0,
-          Math.random() * 6 - 3
+          20 + Math.sin(Math.random() * 10) * 2,
+          0.6,
+          -20 + Math.sin(Math.random() * 10) * 2
         );
         this.model.scale.set(0.008, 0.008, 0.008);
 
@@ -203,7 +208,7 @@ export default class Fox extends EventEmitter {
   }
 
   addFoxRemoteCollision() {
-    this.foxShape = new CANNON.Box(new CANNON.Vec3(0.2, 0.2, 0.2));
+    this.foxShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
     this.foxBody = new CANNON.Body({
       mass: 0.8,
       shape: this.foxShape,
@@ -220,7 +225,7 @@ export default class Fox extends EventEmitter {
     if (this.model) {
       this.sprite_.position.set(
         this.model.position.x,
-        this.model.position.y + 1,
+        this.model.position.y,
         this.model.position.z
       );
 
@@ -228,12 +233,7 @@ export default class Fox extends EventEmitter {
         this.foxBody.position.copy(this.model.position);
       }
     }
-    // this.animBlending();
-    // this.experience.socket.emit("update", {
-    //   x: this.model.position.x,
-    //   y: this.model.position.y,
-    //   z: this.model.position.z,
-    // });
+
     if (this.animation) {
       if (this.anim === "running") {
         this.animation.mixer.update(this.time.delta * 0.0015);
