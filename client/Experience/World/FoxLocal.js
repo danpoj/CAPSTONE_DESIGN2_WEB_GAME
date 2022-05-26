@@ -55,13 +55,13 @@ export default class FoxLocal extends EventEmitter {
 
   setModel() {
     this.resources.loaders.gltfLoader.load(
-      "./Static/models/Fox/glTF/Fox.gltf",
+      "./Static/models/Girl/animeGirl.glb",
       (file) => {
         this.resource = file;
         this.model = file.scene;
         this.model.position.set(
           20 + Math.sin(Math.random() * 10) * 2,
-          0,
+          0.5,
           -20 + Math.sin(Math.random() * 10) * 2
         );
         this.model.scale.set(0.008, 0.008, 0.008);
@@ -112,14 +112,13 @@ export default class FoxLocal extends EventEmitter {
     this.animation.actions.current = this.animation.actions.idle;
     this.animation.actions.current.play();
 
-    const idleAnim = this.animation.actions.idle;
-    idleAnim.play();
+    // const idleAnim = this.animation.actions.idle;
+    // idleAnim.play();
 
     // Play the action
     this.animation.play = (name) => {
       const newAction = this.animation.actions[name];
       const oldAction = this.animation.actions.current;
-
       newAction.reset();
       newAction.play();
       newAction.crossFadeFrom(oldAction, 1);
@@ -151,7 +150,10 @@ export default class FoxLocal extends EventEmitter {
         );
         this.animation.actions.current = this.animation.actions.running;
       }
-    } else if (!this._controls._move.forward) {
+    } else if (
+      !this._controls._move.forward &&
+      this.animation.actions.current !== this.animation.actions.idle
+    ) {
       this.animation.actions.idle.reset();
       this.animation.actions.idle.play();
       this.animation.actions.idle.crossFadeFrom(

@@ -11,15 +11,19 @@ export default class Mirror {
     let geometry, material;
     let groundMirror, verticalMirror;
 
-    geometry = new THREE.CircleGeometry(50, 64);
+    geometry = new THREE.PlaneGeometry(5, 5);
     groundMirror = new Reflector(geometry, {
       clipBias: 0.003,
       textureWidth: window.innerWidth * window.devicePixelRatio,
       textureHeight: window.innerHeight * window.devicePixelRatio,
       color: 0xaafdcc,
     });
-    // groundMirror.position.y -= 0.5;
-    groundMirror.rotateX(-Math.PI / 2);
+    groundMirror.position.x += 20;
+    groundMirror.position.z -= 25;
+    // groundMirror.rotateZ(-Math.PI / 2);
+    // groundMirror.rotateX(-Math.PI / 2);
+    // groundMirror.rotateY(-Math.PI / 4);
+    groundMirror.rotation.set(-1, 0, 0);
     this.scene.add(groundMirror);
   }
 }

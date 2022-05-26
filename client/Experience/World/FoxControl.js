@@ -107,7 +107,7 @@ export default class FoxControl extends EventEmitter {
       velocity.z = 0;
     }
     if (this._move.backward) {
-      //   velocity.z -= this._acceleration.z * timeInSeconds;
+      // velocity.z -= this._acceleration.z * timeInSeconds;
     }
     if (this._move.left) {
       _A.set(0, 1, 0);

@@ -12,10 +12,10 @@ export default class Editor {
     this.time = this.experience.time;
     this.socket = this.experience.socket;
 
-    this.dracoLoader = new DRACOLoader();
-    this.dracoLoader.setDecoderPath("/Static/draco/");
+    // this.dracoLoader = new DRACOLoader();
+    // this.dracoLoader.setDecoderPath("/Static/draco/");
     this.gltfLoader = new GLTFLoader();
-    this.gltfLoader.setDRACOLoader(this.dracoLoader);
+    // this.gltfLoader.setDRACOLoader(this.dracoLoader);
 
     this.input = document.querySelector('input[type="file"]');
     this.editorContainer = document.querySelector("div.editor_container");
