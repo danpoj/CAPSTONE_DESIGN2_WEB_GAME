@@ -315,7 +315,7 @@ export default class Bowling {
       this.sphere.quaternion.copy(this.sphereBody.quaternion);
     }
 
-    if (this.foxLocal && this.foxBody) {
+    if (this.foxLocal.model && this.foxBody) {
       this.foxBody.position.copy(this.foxLocal.model.position);
       this.foxBody.quaternion.copy(this.foxLocal.model.quaternion);
     }
