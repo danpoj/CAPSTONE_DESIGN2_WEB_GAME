@@ -15,7 +15,7 @@ export default class Fox extends EventEmitter {
     setTimeout(() => {
       this.world = this.experience.bowling.world;
       this.addFoxRemoteCollision();
-    }, 5000);
+    }, 10000);
 
     // Resource
 
@@ -213,11 +213,11 @@ export default class Fox extends EventEmitter {
       mass: 0.8,
       shape: this.foxShape,
     });
-    this.foxBody.position.set(
-      this.model.position.x,
-      this.model.position.y,
-      this.model.position.z
-    );
+    // this.foxBody.position.set(
+    //   this.model.position.x,
+    //   this.model.position.y,
+    //   this.model.position.z
+    // );
     this.world.addBody(this.foxBody);
   }
 
