@@ -187,11 +187,11 @@ export default class Bowling {
         shape: this.foxShape,
       });
 
-      this.foxBody.position.set(
-        this.foxLocal.model.position.x,
-        this.foxLocal.model.position.y,
-        this.foxLocal.model.position.z
-      );
+      // this.foxBody.position.set(
+      //   this.foxLocal.model.position.x,
+      //   this.foxLocal.model.position.y,
+      //   this.foxLocal.model.position.z
+      // );
       this.world.addBody(this.foxBody);
     }, 5000);
   }
