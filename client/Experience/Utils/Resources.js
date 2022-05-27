@@ -79,6 +79,11 @@ export default class Resources extends EventEmitter {
           this.sourceLoaded(source, file);
         });
       }
+      if (source.type === "gltfMap") {
+        this.loaders.gltfLoader.load(source.path, (file) => {
+          this.sourceLoaded(source, file);
+        });
+      }
       if (source.type === "texture") {
         this.loaders.textureLoader.load(source.path, (file) => {
           this.sourceLoaded(source, file);
@@ -93,7 +98,6 @@ export default class Resources extends EventEmitter {
 
   sourceLoaded(source, file) {
     this.items[source.name] = file;
-    console.log(this.items);
 
     this.loaded++;
 

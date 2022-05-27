@@ -91,8 +91,12 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("box", boxData);
   });
 
+  socket.on("sphere", (sphereData) => {
+    socket.broadcast.emit("sphere", sphereData);
+  });
+
   socket.on("remove box", () => {
-    socket.broadcast.emit("remove box", "good");
+    socket.broadcast.emit("remove box");
   });
 
   socket.on("model", (data) => {

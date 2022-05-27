@@ -49,30 +49,13 @@ export default class Bowling {
       roughness: 0.05,
       color: 0xffffff,
     });
-    // this.boxMaterial = new THREE.MeshNormalMaterial();
-
+    this.sphereGeometry = new THREE.SphereGeometry(0.2, 10, 10);
+    this.sphereMaterial = new THREE.MeshStandardMaterial({
+      metalness: 0.6,
+      roughness: 0.2,
+      color: 0xffffff,
+    });
     this.addFloor();
-
-    // this.btn = document.querySelector(".cube");
-    // this.btn.addEventListener("click", () => {
-    //   const width = Math.random();
-    //   const height = Math.random();
-    //   const depth = Math.random();
-    //   const position = {
-    //     x: this.foxLocal.model.position.x,
-    //     y: 3,
-    //     z: this.foxLocal.model.position.z,
-    //   };
-
-    //   this.createBox(width, height, depth, position);
-
-    //   this.socket.emit("box", {
-    //     width,
-    //     height,
-    //     depth,
-    //     position,
-    //   });
-    // });
 
     window.addEventListener("keypress", (e) => {
       if (
@@ -104,12 +87,8 @@ export default class Bowling {
         this.isPins = false;
         this.removeBox(this.objectsToUpdate);
         this.removeBox(this.bowlingPins);
-        this.socket.emit("remove box", "good");
+        this.socket.emit("remove box");
       }
-    });
-
-    this.socket.on("remove box", () => {
-      this.removeBox(this.objectsToUpdate);
     });
 
     window.addEventListener("keydown", (e) => {
@@ -127,38 +106,20 @@ export default class Bowling {
       });
     });
 
-    window.addEventListener("keydown", (e) => {
-      if (e.key === "]") {
-        this.sphereShape = new CANNON.Sphere(0.3);
-        this.sphereBody = new CANNON.Body({
-          mass: 1,
-          shape: this.sphereShape,
-        });
-        this.sphereBody.position.set(
-          this.foxLocal.model.position.x,
-          this.foxLocal.model.position.y,
-          this.foxLocal.model.position.z
-        );
-        this.sphereBody.applyLocalForce(
-          new CANNON.Vec3(1500, 0, 0),
-          new CANNON.Vec3(0, 0, 0)
-        );
-        this.world.addBody(this.sphereBody);
+    this.socket.on("sphere", (sphereData) => {
+      this.createRemoteSphere(sphereData);
+    });
 
-        this.sphere = new THREE.Mesh(
-          new THREE.SphereGeometry(0.3, 20, 20),
-          new THREE.MeshStandardMaterial({
-            metalness: 0.6,
-            roughness: 0.4,
-            color: 0xffff00,
-          })
-        );
-        this.sphere.position.set(
-          this.foxLocal.model.position.x,
-          this.foxLocal.model.position.y,
-          this.foxLocal.model.position.z
-        );
-        this.scene.add(this.sphere);
+    this.socket.on("remove box", () => {
+      this.removeBox(this.objectsToUpdate);
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (
+        e.key === "]" ||
+        (e.key === "}" && this.objectsToUpdate.length < 200)
+      ) {
+        this.createSphere();
       }
     });
 
@@ -181,7 +142,7 @@ export default class Bowling {
 
   addFoxLocalCollision() {
     setTimeout(() => {
-      this.foxShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
+      this.foxShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.8, 0.5));
       this.foxBody = new CANNON.Body({
         mass: 0.8,
         shape: this.foxShape,
@@ -194,6 +155,65 @@ export default class Bowling {
       // );
       this.world.addBody(this.foxBody);
     }, 5000);
+  }
+
+  createSphere() {
+    const sphere = new THREE.Mesh(this.sphereGeometry, this.sphereMaterial);
+    sphere.position.set(
+      this.foxLocal.model.position.x,
+      2,
+      this.foxLocal.model.position.z
+    );
+    this.scene.add(sphere);
+
+    const sphereShape = new CANNON.Sphere(0.2);
+    const sphereBody = new CANNON.Body({
+      mass: 0.9,
+      shape: sphereShape,
+    });
+    sphereBody.position.set(
+      this.foxLocal.model.position.x,
+      2,
+      this.foxLocal.model.position.z
+    );
+
+    this.world.addBody(sphereBody);
+
+    sphereBody.addEventListener("collide", this.playHitSound);
+
+    this.objectsToUpdate.push({
+      mesh: sphere,
+      body: sphereBody,
+    });
+
+    this.socket.emit("sphere", {
+      x: this.foxLocal.model.position.x,
+      y: 2,
+      z: this.foxLocal.model.position.z,
+    });
+  }
+
+  createRemoteSphere(position) {
+    console.log(position);
+    const sphere = new THREE.Mesh(this.sphereGeometry, this.sphereMaterial);
+    sphere.position.set(position.x, 2, position.z);
+    this.scene.add(sphere);
+
+    const sphereShape = new CANNON.Sphere(0.2);
+    const sphereBody = new CANNON.Body({
+      mass: 0.9,
+      shape: sphereShape,
+    });
+    sphereBody.position.set(position.x, 2, position.z);
+
+    this.world.addBody(sphereBody);
+
+    sphereBody.addEventListener("collide", this.playHitSound);
+
+    this.objectsToUpdate.push({
+      mesh: sphere,
+      body: sphereBody,
+    });
   }
 
   createBox(width, height, depth, position) {
@@ -296,6 +316,7 @@ export default class Bowling {
 
   update() {
     this.world.step(1 / 60, this.time.delta / 1200, 3);
+
     if (this.objectsToUpdate.length > 0) {
       for (const object of this.objectsToUpdate) {
         object.mesh.position.copy(object.body.position);
@@ -310,10 +331,10 @@ export default class Bowling {
       }
     }
 
-    if (this.sphere) {
-      this.sphere.position.copy(this.sphereBody.position);
-      this.sphere.quaternion.copy(this.sphereBody.quaternion);
-    }
+    // if (this.sphere) {
+    //   this.sphere.position.copy(this.sphereBody.position);
+    //   this.sphere.quaternion.copy(this.sphereBody.quaternion);
+    // }
 
     if (this.foxLocal.model && this.foxBody) {
       this.foxBody.position.copy(this.foxLocal.model.position);
