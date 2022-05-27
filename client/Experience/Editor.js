@@ -305,13 +305,13 @@ export default class Editor {
     if (this.modelsToUpdate.length > 0) {
       for (const object of this.modelsToUpdate) {
         object.mesh.position.copy(object.body.position);
-        object.mesh.quaternion.copy(object.body.quaternion);
+        // object.mesh.quaternion.copy(object.body.quaternion);
       }
     }
     if (this.remoteModelsToUpdate.length > 0) {
       for (const object of this.remoteModelsToUpdate) {
         object.mesh.position.copy(object.body.position);
-        object.mesh.quaternion.copy(object.body.quaternion);
+        // object.mesh.quaternion.copy(object.body.quaternion);
       }
     }
   }
