@@ -47,7 +47,7 @@ export default class FoxLocal extends EventEmitter {
     this.sprite_ = new THREE.Sprite(
       new THREE.SpriteMaterial({ map: map, color: 0xffffff })
     );
-    this.sprite_.scale.set(4, 2, 4);
+    this.sprite_.scale.set(2, 2, 2);
 
     this.experience.scene.add(this.sprite_);
   }

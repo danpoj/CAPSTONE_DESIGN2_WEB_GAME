@@ -22,9 +22,14 @@ export default [
     path: "./Static/textures/dirt/normal.jpg",
   },
   {
-    name: "foxModel",
+    name: "animeCharacter",
     type: "gltfModel",
-    path: "./Static/models/Fox/glTF/Fox.gltf",
+    path: "./Static/models/Girl/animeGirl.glb",
+  },
+  {
+    name: "gltfMap",
+    type: "gltfModel",
+    path: "./Static/models/Square/out.glb",
   },
   // {
   //   name: "foxModel1",
