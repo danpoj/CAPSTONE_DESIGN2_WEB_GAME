@@ -39,8 +39,8 @@ export default class Experience {
     // Options
     this.canvas = _canvas;
 
-    this.socket = io("https://cd2-webgame.herokuapp.com/");
-    // this.socket = io("http://localhost:3001");
+    // this.socket = io("https://cd2-webgame.herokuapp.com/");
+    this.socket = io("http://localhost:3001");
 
     this.socket.on("connect", () => {});
 
@@ -154,9 +154,9 @@ export default class Experience {
   update() {
     this.bowling.update();
 
-    if (this.square.duck) {
-      this.square.rotateDuck();
-    }
+    // if (this.square.duck) {
+    //   this.square.rotateDuck();
+    // }
     this.fps.updateBegin();
 
     this.camera.update();

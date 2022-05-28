@@ -102,6 +102,11 @@ io.on("connection", (socket) => {
   socket.on("model", (data) => {
     socket.broadcast.emit("model", data);
   });
+
+  // socket.on("duck position", (duckPos) => {
+  //   console.log(duckPos);
+  //   socket.broadcast.emit("duck position", duckPos);
+  // });
 });
 
 app.get("/", (req, res) => {
@@ -137,4 +142,4 @@ setInterval(async function () {
   }
 
   if (remotePlayers.length > 0) io.emit("remoteData", remotePlayers);
-}, 20);
+}, 16);

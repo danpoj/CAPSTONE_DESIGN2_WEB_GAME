@@ -116,8 +116,8 @@ export default class Bowling {
 
     window.addEventListener("keydown", (e) => {
       if (
-        e.key === "]" ||
-        (e.key === "}" && this.objectsToUpdate.length < 200)
+        (e.key === "]" || e.key === "}") &&
+        this.objectsToUpdate.length < 200
       ) {
         this.createSphere();
       }
@@ -194,7 +194,6 @@ export default class Bowling {
   }
 
   createRemoteSphere(position) {
-    console.log(position);
     const sphere = new THREE.Mesh(this.sphereGeometry, this.sphereMaterial);
     sphere.position.set(position.x, 2, position.z);
     this.scene.add(sphere);
