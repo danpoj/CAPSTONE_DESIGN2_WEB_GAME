@@ -20,7 +20,7 @@ export default class Bowling {
       const impactStrength = collision.contact.getImpactVelocityAlongNormal();
 
       if (impactStrength > 1.5) {
-        this.hitSound.volume = Math.random() * 0.3;
+        this.hitSound.volume = Math.random() * 0.5;
         this.hitSound.currentTime = 0;
         this.hitSound.play();
       }
@@ -47,12 +47,12 @@ export default class Bowling {
     this.boxMaterial = new THREE.MeshStandardMaterial({
       metalness: 0.9,
       roughness: 0.05,
-      color: 0xffffff,
+      color: 0xffbc05,
     });
     this.sphereGeometry = new THREE.SphereGeometry(0.2, 10, 10);
     this.sphereMaterial = new THREE.MeshStandardMaterial({
-      metalness: 0.6,
-      roughness: 0.2,
+      metalness: 0.7,
+      roughness: 0.15,
       color: 0xffffff,
     });
     this.addFloor();

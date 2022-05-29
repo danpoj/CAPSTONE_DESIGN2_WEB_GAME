@@ -69,6 +69,7 @@ export default class Experience {
     this.editor = new Editor();
 
     this.scene.background = new THREE.Color(0x050505);
+    // this.scene.background = new THREE.Color(0x111111);
     // values
     this.rplayer = [];
     this.addedListID = [];
