@@ -6,6 +6,7 @@ const server = http.createServer(app);
 const port = process.env.PORT || 3001;
 const { Server } = require("socket.io");
 const path = require("path");
+const { v4: uuidV4 } = require("uuid");
 
 let UserObjectsData = [];
 
@@ -103,10 +104,11 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("model", data);
   });
 
-  // socket.on("duck position", (duckPos) => {
-  //   console.log(duckPos);
-  //   socket.broadcast.emit("duck position", duckPos);
-  // });
+  socket.emit("user id", uuidV4());
+
+  socket.on("join room", (userId) => {
+    socket.broadcast.emit("user connected");
+  });
 });
 
 app.get("/", (req, res) => {

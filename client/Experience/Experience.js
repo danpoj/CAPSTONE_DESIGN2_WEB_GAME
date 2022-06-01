@@ -22,6 +22,7 @@ import Square from "./World/Square.js";
 import Editor from "./Editor.js";
 import Bowling from "./World/Bowling.js";
 import Mirror from "./World/Mirror.js";
+import VideoCall from "./VideoCall.js";
 
 let instance = null;
 
@@ -67,6 +68,7 @@ export default class Experience {
     this.mirror = new Mirror();
 
     this.editor = new Editor();
+    this.videoCall = new VideoCall();
 
     this.scene.background = new THREE.Color(0x050505);
     // this.scene.background = new THREE.Color(0x111111);
