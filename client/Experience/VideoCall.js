@@ -5,6 +5,8 @@ export default class VideoCall {
     this.experience = new Experience();
     this.socket = this.experience.socket;
 
+    const peers = {};
+
     const videoGrid = document.getElementById("video-grid");
     const myPeer = new Peer(undefined, {
       host: "https://cd2-webgame.herokuapp.com/",
@@ -21,42 +23,51 @@ export default class VideoCall {
         audio: true,
       })
       .then((stream) => {
-        myVideo.srcObject = stream;
-        myVideo.addEventListener("loadedmetadata", () => {
-          myVideo.play();
-        });
-        videoGrid.append(myVideo);
+        this.addVideoStream(myVideo, stream);
 
         myPeer.on("call", (call) => {
           call.answer(stream);
           const video = document.createElement("video");
-          call.on("stream", (userVideoStream) => {});
+          call.on("stream", (userVideoStream) => {
+            this.addVideoStream(video, userVideoStream);
+          });
         });
 
-        this.socket.on("user connected", () => {
-          const call = myPeer.call();
+        this.socket.on("user connected", (userId) => {
+          const call = myPeer.call(userId, stream);
           const video = document.createElement("video");
           call.on("stream", (userVideoStream) => {
-            video.srcObject = userVideoStream;
-            video.addEventListener("loadedmetadata", () => {
-              video.play();
-            });
-            videoGrid.append(video);
+            this.addVideoStream(video, userVideoStream);
           });
           call.on("close", () => {
             video.remove();
           });
+          peers[userId] = call;
         });
       });
 
-    myPeer.on("open", (id) => {
-      console.log(id);
+    this.socket.on("user disconnected", (userId) => {
+      if (peers[userId]) {
+        peers[userId].close();
+      }
     });
 
-    this.socket.emit("join room");
+    myPeer.on("open", (id) => {
+      this.socket.emit("join room", this.userId, 10);
+    });
+
+    this.socket.emit("join room", this.userId);
     this.socket.on("user connected", () => {});
     this.socket.on("user id", (userId) => {
-      console.log(userId);
+      this.userId = userId;
     });
+  }
+
+  addVideoStream(video, stream) {
+    video.srcObject = stream;
+    video.addEventListener("loadedmetadata", () => {
+      video.play();
+    });
+    videoGrid.append(video);
   }
 }

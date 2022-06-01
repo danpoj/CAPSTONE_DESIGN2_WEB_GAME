@@ -107,7 +107,12 @@ io.on("connection", (socket) => {
   socket.emit("user id", uuidV4());
 
   socket.on("join room", (userId) => {
-    socket.broadcast.emit("user connected");
+    socket.join(userId);
+    socket.broadcast.emit("user connected", 10);
+
+    socket.on("disconnected", () => {
+      socket.broadcast.emit("user disconnected", userId);
+    });
   });
 });
 
