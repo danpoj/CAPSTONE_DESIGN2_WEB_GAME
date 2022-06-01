@@ -7,7 +7,7 @@ export default class VideoCall {
 
     const peers = {};
 
-    const videoGrid = document.getElementById("video-grid");
+    this.videoGrid = document.getElementById("video-grid");
     const myPeer = new Peer(undefined, {
       host: "https://cd2-webgame.herokuapp.com/",
       port: 443,
@@ -68,6 +68,6 @@ export default class VideoCall {
     video.addEventListener("loadedmetadata", () => {
       video.play();
     });
-    videoGrid.append(video);
+    this.videoGrid.append(video);
   }
 }
