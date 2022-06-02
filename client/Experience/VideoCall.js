@@ -6,8 +6,11 @@ export default class VideoCall {
     this.socket = this.experience.socket;
 
     this.myPeer = new Peer(undefined, {
-      host: "/",
-      port: "3002",
+      //   host: "/",
+      //   port: "3002",
+      key: "peerjs",
+      debug: 2,
+      secure: process.env.REACT_APP_ENV === "PRODUCTION" ? true : false,
     });
     this.peers = {};
     this.videoGrid = document.getElementById("video-grid");
