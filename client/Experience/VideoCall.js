@@ -5,17 +5,14 @@ export default class VideoCall {
     this.experience = new Experience();
     this.socket = this.experience.socket;
 
-    const peers = {};
-
-    this.videoGrid = document.getElementById("video-grid");
-    const myPeer = new Peer(undefined, {
-      host: "https://cd2-webgame.herokuapp.com/",
-      port: 443,
-      path: "/",
-      secure: true,
+    this.myPeer = new Peer(undefined, {
+      host: "/",
+      port: "3002",
     });
-    const myVideo = document.createElement("video");
-    myVideo.muted = true;
+    this.peers = {};
+    this.videoGrid = document.getElementById("video-grid");
+    this.myVideo = document.createElement("video");
+    this.myVideo.muted = true;
 
     navigator.mediaDevices
       .getUserMedia({
@@ -23,10 +20,9 @@ export default class VideoCall {
         audio: true,
       })
       .then((stream) => {
-        this.addVideoStream(myVideo, stream);
+        this.addVideoStream(this.myVideo, stream);
 
-        myPeer.on("call", (call) => {
-          this.call = call;
+        this.myPeer.on("call", (call) => {
           call.answer(stream);
           const video = document.createElement("video");
           call.on("stream", (userVideoStream) => {
@@ -34,34 +30,37 @@ export default class VideoCall {
           });
         });
 
-        this.socket.on("user connected", (userId) => {
-          const call = myPeer.call(userId, stream);
-          const video = document.createElement("video");
-          call.on("stream", (userVideoStream) => {
-            this.addVideoStream(video, userVideoStream);
-          });
-          call.on("close", () => {
-            video.remove();
-          });
-          peers[userId] = call;
+        this.socket.on("user-connected", (userId) => {
+          this.connectedToNewUser(userId, stream);
         });
       });
 
-    this.socket.on("user disconnected", (userId) => {
-      if (peers[userId]) {
-        peers[userId].close();
+    this.socket.on("user-disconnected", (userId) => {
+      if (this.peers[userId]) {
+        this.peers[userId].close();
       }
     });
 
-    myPeer.on("open", (id) => {
-      this.socket.emit("join room", this.userId, 10);
+    this.myPeer.on("open", (id) => {
+      this.socket.emit("join-room", "room1", id);
     });
 
-    this.socket.emit("join room", this.userId);
-    this.socket.on("user connected", () => {});
-    this.socket.on("user id", (userId) => {
-      this.userId = userId;
+    this.socket.on("user-connected", (userId) => {
+      console.log(`user connection: ${userId}`);
     });
+  }
+
+  connectedToNewUser(userId, stream) {
+    const call = this.myPeer.call(userId, stream);
+    const video = document.createElement("video");
+    call.on("stream", (userVideoStream) => {
+      this.addVideoStream(video, userVideoStream);
+    });
+    call.on("close", () => {
+      video.remove();
+    });
+
+    this.peers[userId] = call;
   }
 
   addVideoStream(video, stream) {

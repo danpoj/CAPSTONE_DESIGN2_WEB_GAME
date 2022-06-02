@@ -104,14 +104,13 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("model", data);
   });
 
-  socket.emit("user id", uuidV4());
+  socket.on("join-room", (roomId, userId) => {
+    console.log(roomId, userId);
+    socket.join(roomId);
+    socket.to(roomId).emit("user-connected", userId);
 
-  socket.on("join room", (userId) => {
-    socket.join(userId);
-    socket.broadcast.emit("user connected", 10);
-
-    socket.on("disconnected", () => {
-      socket.broadcast.emit("user disconnected", userId);
+    socket.on("disconnect", () => {
+      socket.to(roomId).emit("user-disconnected", userId);
     });
   });
 });
