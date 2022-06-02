@@ -8,9 +8,15 @@ export default class VideoCall {
     this.myPeer = new Peer(undefined, {
       //   host: "/",
       //   port: "3002",
-      key: "peerjs",
-      debug: 2,
-      secure: process.env.REACT_APP_ENV === "PRODUCTION" ? true : false,
+
+      //   key: "peerjs",
+      //   debug: 2,
+      //   secure: process.env.REACT_APP_ENV === "PRODUCTION" ? true : false,
+
+      host: "https://cd2-webgame.herokuapp.com",
+      port: 443,
+      path: "/",
+      secure: true,
     });
     this.peers = {};
     this.videoGrid = document.getElementById("video-grid");
