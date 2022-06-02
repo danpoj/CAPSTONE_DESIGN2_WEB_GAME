@@ -26,6 +26,7 @@ export default class VideoCall {
         this.addVideoStream(myVideo, stream);
 
         myPeer.on("call", (call) => {
+          this.call = call;
           call.answer(stream);
           const video = document.createElement("video");
           call.on("stream", (userVideoStream) => {

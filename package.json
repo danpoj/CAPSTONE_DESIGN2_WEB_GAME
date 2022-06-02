@@ -16,6 +16,7 @@
     "express": "^4.17.3",
     "meshwalk": "^0.0.0",
     "nodemon": "^2.0.16",
+    "peer": "^0.6.1",
     "socket.io": "^4.4.1",
     "socket.io-client": "^4.4.1",
     "stats.js": "^0.17.0",
