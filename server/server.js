@@ -10,9 +10,9 @@ const { v4: uuidV4 } = require("uuid");
 const { ExpressPeerServer } = require("peer");
 
 const peerServer = ExpressPeerServer(server, {
-  path: "/myapp",
+  debug: true,
 });
-app.use("/myapp", peerServer);
+app.use("/peerjs", peerServer);
 
 let UserObjectsData = [];
 

@@ -9,9 +9,9 @@ export default class VideoCall {
       //   host: "/",
       //   port: "3002",
 
-      host: "https://cd2-webgame.herokuapp.com",
+      host: "/",
       port: 443,
-      path: "/myapp/myapp",
+      path: "/peerjs",
       secure: true,
     });
     this.peers = {};
