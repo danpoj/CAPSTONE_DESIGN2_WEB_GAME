@@ -68,7 +68,7 @@ export default class Experience {
     this.mirror = new Mirror();
 
     this.editor = new Editor();
-    this.videoCall = new VideoCall();
+    // this.videoCall = new VideoCall();
 
     this.scene.background = new THREE.Color(0x050505);
     // this.scene.background = new THREE.Color(0x111111);

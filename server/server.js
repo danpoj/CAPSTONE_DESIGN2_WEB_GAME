@@ -9,10 +9,10 @@ const path = require("path");
 const { v4: uuidV4 } = require("uuid");
 const { ExpressPeerServer } = require("peer");
 
-const peerServer = ExpressPeerServer(server, {
-  debug: true,
-});
-app.use("/peerjs", peerServer);
+// const peerServer = ExpressPeerServer(server, {
+//   debug: true,
+// });
+// app.use("/peerjs", peerServer);
 
 let UserObjectsData = [];
 
@@ -110,15 +110,15 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("model", data);
   });
 
-  socket.on("join-room", (roomId, userId) => {
-    console.log(roomId, userId);
-    socket.join(roomId);
-    socket.to(roomId).emit("user-connected", userId);
+  // socket.on("join-room", (roomId, userId) => {
+  //   console.log(roomId, userId);
+  //   socket.join(roomId);
+  //   socket.to(roomId).emit("user-connected", userId);
 
-    socket.on("disconnect", () => {
-      socket.to(roomId).emit("user-disconnected", userId);
-    });
-  });
+  //   socket.on("disconnect", () => {
+  //     socket.to(roomId).emit("user-disconnected", userId);
+  //   });
+  // });
 });
 
 app.get("/", (req, res) => {
