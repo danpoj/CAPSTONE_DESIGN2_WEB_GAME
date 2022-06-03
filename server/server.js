@@ -7,6 +7,13 @@ const port = process.env.PORT || 3001;
 const { Server } = require("socket.io");
 const path = require("path");
 const { v4: uuidV4 } = require("uuid");
+const { ExpressPeerServer } = require("peer");
+
+const peerServer = ExpressPeerServer(server, {
+  debug: true,
+  path: "/peerjs",
+});
+app.use("/peerjs", peerServer);
 
 let UserObjectsData = [];
 
@@ -119,7 +126,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/index.html"));
 });
 
-const videoServer = server.listen(port, () => {
+server.listen(port, () => {
   console.log("server is running. on localhost:3001");
 });
 
