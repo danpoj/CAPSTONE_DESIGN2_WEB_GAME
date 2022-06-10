@@ -65,12 +65,12 @@ export default class Experience {
 
     this.square = new Square();
     this.bowling = new Bowling();
-    this.mirror = new Mirror();
+    // this.mirror = new Mirror();
 
     this.editor = new Editor();
     // this.videoCall = new VideoCall();
 
-    this.scene.background = new THREE.Color(0x050505);
+    this.scene.background = new THREE.Color(0xffffff);
     // this.scene.background = new THREE.Color(0x111111);
     // values
     this.rplayer = [];

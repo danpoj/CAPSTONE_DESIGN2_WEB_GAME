@@ -112,7 +112,7 @@ export default class Fox extends EventEmitter {
         // );
         this.model.position.set(
           20 + Math.sin(Math.random() * 10) * 2,
-          0.6,
+          -0.3,
           -20 + Math.sin(Math.random() * 10) * 2
         );
         this.model.scale.set(0.008, 0.008, 0.008);
@@ -208,7 +208,7 @@ export default class Fox extends EventEmitter {
   }
 
   addFoxRemoteCollision() {
-    this.foxShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
+    this.foxShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.8, 0.5));
     this.foxBody = new CANNON.Body({
       mass: 0.8,
       shape: this.foxShape,

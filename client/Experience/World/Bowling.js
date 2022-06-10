@@ -130,7 +130,7 @@ export default class Bowling {
     this.floorShape = new CANNON.Plane();
     this.floorBody = new CANNON.Body({
       mass: 0,
-      position: new CANNON.Vec3(0, 0, 0),
+      position: new CANNON.Vec3(0, -1, 0),
       shape: this.floorShape,
     });
     this.floorBody.quaternion.setFromAxisAngle(
